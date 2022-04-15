@@ -1,5 +1,5 @@
 coverage==4.5
-Django==2.2.24
+Django==2.2.27
 django-bootstrap3==9.1.0
 django-extensions==1.9.9
 django-rest-framework==0.1.0
