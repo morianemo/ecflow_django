@@ -3,13 +3,11 @@
 source ./venv/bin/activate; dest=$HOME/http/; cd $dest/fdi
 nohup python manage.py runserver 0.0.0.0:8001 > /tmp/django.tpm 2>&1 &
 """
-from __future__ import absolute_import
-from __future__ import print_function    # (at top of module)
 from django.http import HttpResponse
 from django.conf import settings
 from django import forms  # newforms as forms
 import django.template as dt
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template.context_processors import csrf
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import *
@@ -32,9 +30,10 @@ except:
     from io import StringIO
 # from django.utils.encoding import force_unicode
 from django.utils.html import escape, mark_safe
-from cgi import parse_qs, escape
+from html import escape
+from urllib.parse import parse_qs
 #from urlparse import urlparse
-from django.core.urlresolvers import reverse, resolve
+from django.urls import reverse, resolve
 
 import django.core.handlers.wsgi
 import pprint
@@ -101,7 +100,6 @@ cdp = '/usr/local/apps/sms/bin/cdp'
 def slide2(request):
     template = dt.loader.get_template('ecflow2.html')
     return HttpResponse(template.render(dict()))
-    # return render_to_response('template/ecflow2.html')
 
 
 def slide3(request):
@@ -158,7 +156,7 @@ def paranoid_context_manager(context, expected_keys=None):
             raise ParanoidKeyError('Keys not referenced: %r' % (unref,))
 
 
-def paranoid_render_to_response(template_name, dictionary=None,
+def paranoid_render_to_response(request, template_name, dictionary=None,
                                 context_instance=None, *args, **kwargs):
     """
     use ParanoidContextProxy *and* require that all variables passed
@@ -167,7 +165,7 @@ def paranoid_render_to_response(template_name, dictionary=None,
     if dictionary is None:
         dictionary = {}
     with paranoid_context_manager(context_instance, dictionary.keys()) as c:
-        return render_to_response(template_name, dictionary, c, *args, **kwargs)
+        return render(render, template_name, dictionary, c, *args, **kwargs)
 
 
 def home(request):
@@ -1780,7 +1778,7 @@ def d3d(request):
 
 
 login_template = """
-{% load staticfiles %}
+{% load static %}
 {% load bootstrap3 %}
 {% include "header.html" %}
 <!--DOCTYPE html><html><head></head><body-->

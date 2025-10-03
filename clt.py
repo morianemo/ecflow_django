@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import unicodedata
-pinst='/usr/local/apps/ecflow/current/lib/python2.7/site-packages/'
+pinst='/usr/local/apps/ecflow/current/lib/python3.9/site-packages/'
 import sys, os
 sys.path.append(pinst)
 import ecflow as ec
@@ -47,7 +47,7 @@ def tostr(source):
 def todef(node, port, path):
     global CLIENTS
     full = "%s@%s%s" % ( node, port, path )
-    if not CLIENTS.has_key(full):
+    if full not in CLIENTS:
         if '/' in path:
             loc = '/' + '/'.join(path.split('/')[1:])
             cl = Client(tostr(node), int(port), tostr(loc))
@@ -58,7 +58,7 @@ def todef(node, port, path):
     return cl.update()
 
 
-def find_script(node, dct, ext=".sms", seed="ECF_FILES"):
+def find_script(node, dct, ext=".ecf", seed="ECF_FILES"):
     path = node.get_abs_node_path()
     #start = dct[seed].replace("/mc/", "/mc.old/")
     #start = dct[seed].replace("/o/", "/o.old/")
@@ -224,7 +224,7 @@ def fill_var(node, out=None):
     if not node: return out
     for var in node.variables:
         if var.name() in ("ECF_HOME", "ECF_FILES", "ECF_INCLUDE"):
-            if out.has_key(var.name()): continue
+            if var.name() in out: continue
             out[var.name()]= var.value()
     if len(out) == 3:
         LISTFILES.ingest(out["ECF_FILES"], ".sms")
@@ -240,7 +240,7 @@ def jobs_var(node, out=None):
     if not node: return out
     for var in node.variables:
         if var.name() in ("ECF_HOME", "ECF_OUT", ):
-            if out.has_key(var.name()): continue
+            if var.name() in out: continue
             out[var.name()]= var.value()
     if len(out) == 2: return out
     node = node.get_parent()
@@ -328,9 +328,9 @@ def list_include(where, dct, out=None):
 class Test0069(unittest.TestCase):
     """ a test case """
     def test_0069(self):
-        node = "vsms3"
-        port = 31415
-        task = "/eda/main/00"
+        node = "localhost"
+        port = 3141
+        task = "/test"
         defs, item = todef(node, port, task)
         res = get_node_times(defs, item),
         print(res)

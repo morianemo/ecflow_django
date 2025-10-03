@@ -19,7 +19,7 @@ class Author(models.Model):
     name       = models.CharField(max_length=50)
     email       = models.CharField(max_length=50)
     lname       = models.CharField(max_length=50)
-    createdBy   = models.ForeignKey(User)
+    createdBy   = models.ForeignKey(User, on_delete=models.CASCADE)
     createdAt   = models.DateTimeField()
 
 class Property(models.Model):
@@ -147,8 +147,10 @@ class Tasks(models.Model):
 
 class Task(models.Model):
     name = models.CharField(max_length=384, primary_key=True)
-    nick = models.ForeignKey(Tasks,db_column='nick',to_field='name')
-    server = models.ForeignKey(Servers,db_column='server',to_field='id')
+    nick = models.ForeignKey(Tasks,db_column='nick',to_field='name',
+                             on_delete=models.CASCADE)
+    server = models.ForeignKey(Servers,db_column='server',to_field='id',
+                               on_delete=models.CASCADE)
     desc = models.CharField(max_length=384)
 
 class Events(models.Model):
@@ -156,8 +158,10 @@ class Events(models.Model):
 
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
-    kind = models.ForeignKey(Events,db_column='kind',to_field='name')
-    task = models.ForeignKey(Task,db_column='task',to_field='name')
+    kind = models.ForeignKey(Events,db_column='kind',to_field='name',
+                             on_delete=models.CASCADE)
+    task = models.ForeignKey(Task,db_column='task',to_field='name',
+                             on_delete=models.CASCADE)
     date = models.DateTimeField()
 
 class Streams(models.Model):
@@ -170,7 +174,10 @@ class Dataset(models.Model):
     id = models.AutoField(primary_key=True)
     klass = models.CharField(max_length=2)
     domain = models.CharField(max_length=1)
-    stream = models.ForeignKey(Streams,db_column='stream',to_field='name')
-    expver = models.ForeignKey(Expvers,db_column='expver',to_field='name')
+    stream = models.ForeignKey(Streams,db_column='stream',to_field='name',
+                               on_delete=models.CASCADE)    
+    expver = models.ForeignKey(Expvers,db_column='expver',to_field='name',
+                               on_delete=models.CASCADE
+                               )
     path   = models.CharField(max_length=384)
     date = models.DateTimeField()

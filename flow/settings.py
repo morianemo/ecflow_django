@@ -80,15 +80,26 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'je5fyp0d(_1nc_*r(j$oxt0(wpy2a-p-l5jy^6#4qld79=2fc$'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+MIDDLEWARE = (
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'flow.urls'
@@ -105,8 +116,8 @@ TEMPLATES = [ {
         'context_processors': [
             'django.template.context_processors.debug',
             'django.template.context_processors.request',
+            'django.contrib.messages.context_processors.messages',            
             'django.contrib.auth.context_processors.auth',
-            'django.contrib.messages.context_processors.messages',
         ],},
     },] 
 
@@ -128,18 +139,14 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-
     'flow',
     # 'flow.templatetags',
-
     # 'django_tasks',
     # 'djsupervisor',
     'rest_framework',
-
     # 'ds', 
     # 'sst',
     # 'sms',
-
     'django_extensions',
 )
 
