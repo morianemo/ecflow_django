@@ -228,7 +228,7 @@ def get_uid():
 
 
 def ecf_port():
-    return 1500 + get_uid()
+    return 3141  # 1500 + get_uid()
 
 
 client = os.getenv('ECF_HOST', 'localhost') + \
@@ -253,7 +253,7 @@ form_template += """</div>
         </div>
         <!-- initially hidden right-click menu -->
         <!--div class="hide" id="rmenu">
-<ul><li><a href="http://%s/login">Localhost</a></li></ul></div-->
+<ul><li><a href="http://%s/login">localhost</a></li></ul></div-->
 </body>
 </html>""" % (HOST, HOST,
               HOST, PORT,
@@ -327,7 +327,6 @@ class EcflowScheduler(GenericScheduler):
         self.prev = None
 
     def client(self, key):
-        # print(key)
         if len(self.clients) == 0:
             self.clients[key] = ec.Client(key)
         elif key not in self.clients.keys():
@@ -363,9 +362,7 @@ class EcflowScheduler(GenericScheduler):
         result = StringIO()
         sys.stdout = result
         ec.PrintStyle.set_style(ec.Style.STATE)
-        # print(defs)
         sys.stdout = old_stdout
-        # content = "%s" % defs
         content = result.getvalue()
         name += "<br/>" + content.replace("\n", "<br />")
         clt.ch_drop()
@@ -448,9 +445,9 @@ class EcflowScheduler(GenericScheduler):
                 depth = 5
                 print("#ERR: depth", var['depth'])
             tree = def2json.TreeD3JS(node=defs,
-                                      fis=var['fis'],
-                                      fia=var['fia'],
-                                      depth=depth)
+                                     fis=var['fis'],
+                                     fia=var['fia'],
+                                     depth=depth)
             jsontree = tree.to_json()
             # jsontree = ecf.to_d3js(defs)
             # print(# defs,                  tree, jsontree)
@@ -505,7 +502,6 @@ class SMSScheduler(GenericScheduler):
             return None
         if key not in self.clients.keys():
             self.clients[key] = def2json.SMSClient(key)
-        # if DEBUG:            print('key:', key)
         return self.clients[key]
 
     def ping(self, key):
@@ -1568,7 +1564,7 @@ img {
     <ul data-role="listview">
       <li><a href="static/ecf.html" data-ajax="false">ecf.py</a>
 <li><a 
-    href="https://software.ecmwf.int/wiki/display/ECFLOW/ecFlow+Python+Api"
+    href="https://confluence.ecmwf.int/display/ECFLOW/ecFlow+Python+Api"
     data-ajax="false"> native ecFlow API</a></li>
 <li><a href="static/o.html" data-ajax="false">o</a>
 <li><a href="static/mc.html" data-ajax="false">mc</a>
@@ -1914,8 +1910,7 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                if 1:
-                    return verify(request)  # Redirect to a success page.
+                return verify(request)  # Redirect to a success page.
             else:
                 output = 'disabled account'
         else:

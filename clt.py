@@ -11,6 +11,7 @@ try:
 except: pass
 import unittest
 ECFLOW  = "/usr/local/apps/ecflow/current/bin/ecflow_client"
+ECFLOW  = "ecflow_client"
 CLIENTS = dict()
 
 
@@ -138,7 +139,7 @@ def get_node_times(defs, node):
         output[pitem] = dct
         output[pitem] = [ pitem ] # dct
         # is_in_redis = False
-        if red: # is_in_redis:
+        if red:
             item = "%s" % red.get(pitem)
             got = item.replace("[", "").replace(
                 "]", "").replace("'", "").replace(
@@ -325,15 +326,17 @@ def list_include(where, dct, out=None):
     LISTFILES.usedf.update(out)
     return out.keys()
 
+
 class Test0069(unittest.TestCase):
     """ a test case """
     def test_0069(self):
         node = "localhost"
         port = 3141
-        task = "/test"
+        task = "/suite"
         defs, item = todef(node, port, task)
         res = get_node_times(defs, item),
         print(res)
+
 
 if __name__ == '__main__':
     unittest.main()

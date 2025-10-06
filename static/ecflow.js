@@ -10,6 +10,7 @@ function colour(d) {
       if (statuses[num] == d._status) { 
         return status_colours[num]; 
       }
+      // console.log(statuses[num] + " " + d._status + "\n");
     }
     return status_colours[0]; 
   }
@@ -24,9 +25,36 @@ function colour(d) {
   return d.colour || "#fff";
 }
 
+
 /* thanks
 http://stackoverflow.com/questions/4909167/how-to-add-a-custom-right-click-menu-to-a-webpage 
 */
+/*
+$(document).ready(function() {
+  if ($("#test").addEventListener) {
+    $("#test").addEventListener('contextmenu', function(e) {
+	      alert("You've tried to open context menu"); 
+	      //here you draw your own menu
+	      e.preventDefault();
+	  }, false);
+  } else {
+      //document.getElementById("test").attachEvent('oncontextmenu', function() {
+      //$(".test").bind('contextmenu', function() {
+      $('body').on('contextmenu', 'a.test', function(event) {
+	 //alert("contextmenu"+event);
+	      var elt = document.getElementById("rmenu");
+	      elt.className = "show";  
+	      // elt.style.top =  mouseY(event);
+	      // elt.style.left = mouseX(event);
+	      // window.event.returnValue = false;
+        });
+    }
+});
+*/
+// this is from another SO post...  
+/*    $(document).bind("click", function(event) {
+        document.getElementById("rmenu").className = "hide";
+    }); */
 
 var mouseX = 0;
 var mouseY = 0;
@@ -40,5 +68,20 @@ var mousepos = function mousePos (e) {
 
 window.onload = function () {
      document.onmousemove = mousepos; 
-     // document.onmousedown = function (e) {mouseClicked();};
+     //document.onmousedown = function (e) {mouseClicked();};
  };
+
+/*
+// https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Add_a_Context_Menu_Item
+var contextMenu = require("sdk/context-menu");
+var menuItem = contextMenu.Item({
+  label: "Log Selection",
+  context: contextMenu.SelectionContext(),
+  contentScript: 'self.on("click", function () {' +
+                 '  var text = window.getSelection().toString();' +
+                 '  self.postMessage(text);' +
+                 '});',
+  onMessage: function (selectionText) {
+    console.log(selectionText);
+  }
+  });*/

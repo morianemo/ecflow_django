@@ -47,9 +47,7 @@ var mouseover = function(d) {
 }
 
 d3.json(jsondata, function(error, data) {
-	root = data ;
-
-// console.log(data + "\n");
+	root = data;
   var node = div.datum(root).selectAll(".node")
       .data(treemap.nodes)
     .enter().append("div")
@@ -99,4 +97,33 @@ function position() {
       .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
 }
 
-// Thanks http://bl.ocks.org/tgk/6044254
+// http://bl.ocks.org/tgk/6044254
+/*
+Group,Group description,Type,Type description,Percentage
+A,The Rich,A1,Privileged,3
+A,The Rich,A2,Entrepaneurs,7
+A,The Rich,A3,Empty Nesters,10
+B,Upper Class Families,B4,Well-established Volvo,23
+B,Upper Class Families,B5,Optimist,7
+C,Suburban,C6,Small Business,5
+C,Suburban,C7,Never Left Home,15
+E,Students,D8,Students,12
+F,Troubled,E9,Borderline Beneficiaries,8
+F,Welfare,F10,Families on Benefits,10
+
+ */
+
+// http://stackoverflow.com/questions/4909167/how-to-add-a-custom-right-click-menu-to-a-webpage
+/*
+if (document.addEventListener) {
+        document.addEventListener('contextmenu', function(e) {
+            alert("You've tried to open context menu"); //here you draw your own menu
+            e.preventDefault();
+        }, false);
+    } else {
+        document.attachEvent('oncontextmenu', function() {
+            alert("You've tried to open context menu");
+            window.event.returnValue = false;
+        });
+    }
+*/

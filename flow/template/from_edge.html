@@ -103,10 +103,9 @@ function packageImports(nodes) {
   // For each import, construct a link from the source to target node.
   nodes.forEach(function(d) {
     if (d.imports) d.imports.forEach(function(i) {
-						    // if (d.name && i) { 
-						    if (map[d.name] && map[i]) { // ABO 
+	if (map[d.name] && map[i]) {
       imports.push({source: map[d.name], target: map[i]}); 
-						    } // } // ABO
+	}
     });
   });
 
