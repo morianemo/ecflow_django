@@ -5,7 +5,7 @@ django-bootstrap3
 django-extensions
 django-rest-framework
 djangorestframework
-lxml==4.9.1
+lxml==6.1.0
 pytz==2017.3
 six==1.11.0
 typing==3.6.4
